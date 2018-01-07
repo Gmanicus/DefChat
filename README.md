@@ -1,7 +1,7 @@
 # DefChat
 Chat asset for the Defold engine
 
-https://github.com/GamingBud/DefChat/blob/master/misc/DEF_CHAT.gif
+DefChat/misc/DEF_CHAT.gif
 
 -----------------------------------------------------------------------------------------------
 DefChat is a chatterbox. He really likes repeating what everyone says. The good thing is that he's good about keeping things neat and orderly.
