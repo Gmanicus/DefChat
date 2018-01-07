@@ -1,8 +1,7 @@
 # DefChat
 Chat asset for the Defold engine
 
-<blockquote class="embedly-card"><h4><a href="https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT.gif">null</a></h4><p>null</p></blockquote>
-<script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+![alt text](https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT.gif)
 
 -----------------------------------------------------------------------------------------------
 DefChat is a chatterbox. He really likes repeating what everyone says. The good thing is that he's good about keeping things neat and orderly.
