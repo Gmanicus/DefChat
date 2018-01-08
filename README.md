@@ -31,9 +31,7 @@ Initial commit. Chat asset added to Defold community website.
 # Version 0.1 - Jan. 7th, 2018
 
 FIXED: Backspacing causing odd duplication and deformed commandline text
-
 FIXED: Caret extending beyond commandline width
 
 CHANGED: Commandline text allowed width to make text fit neater and more evenly
-
 CHANGED: get_length(self, it) function for mutli-use with a return statement instead of a single variable equation
