@@ -12,6 +12,8 @@ Other scripts can have their messages printed through the message-passing system
 
 From Character-Precise linebreaking to the ability to stamp messages overtime, it’s got it.
 
+------
+
 # Installation Guide
 
 To install DefChat, you need to add it as a library dependency. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list.
