@@ -6,21 +6,13 @@ Chat asset for the Defold engine
 Untested on non-Windows devices. Anyone willing to test and report the details back to me would be helpful.
 
 -----------------------------------------------------------------------------------------------
-DefChat is a chatterbox. He really likes repeating what everyone says. The good thing is that he's good about keeping things neat and orderly.
+DefChat is a chat asset for any Defold project. It activates on press of the ‘enter’ key, which allows you to start typing. Once the ‘enter’ key is pressed again the message is read and fit into the space above it.
 
-* DefChat will accept keypresses upon activation by (default) the "enter" key. Type as maniacally as you want... he'll keep up.
+Other scripts can have their messages printed through the message-passing system as well. This allows for easy adaptability for Multiplayer projects especially.
 
-* When typing your message, it will appear in the commandline. It will be subbed to fit once it gets to long.
+From Character-Precise linebreaking to the ability to stamp messages overtime, it’s got it.
 
-* If you make a mistake, there is a way back. Backspacing is supported.
-
-Upon deactivating the commandline, your message (if any) will be displayed in the chatbox above the commandline.
-
-* Linebreaks are inserted where necessary to keep the message within the chatbox bounds. Currently "Character-Precise".
-
-* All previous messages are bumped the appropriate space to make way for the new node.
-
-* All nodes after 8 are wiped to save on memory and processing. This also provides shielding from the chat taking over the screen because chatbox cropping is currently not implemented.
+![alt text](https://media.giphy.com/media/26Fffn40AjS3f2Q2Q/giphy.gif)
 
 ------
 
