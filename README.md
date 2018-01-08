@@ -12,8 +12,6 @@ Other scripts can have their messages printed through the message-passing system
 
 From Character-Precise linebreaking to the ability to stamp messages overtime, it’s got it.
 
-![alt text](https://media.giphy.com/media/26Fffn40AjS3f2Q2Q/giphy.gif)
-
 ------
 
 # Version 0.05 - Jan. 5th, 2018
