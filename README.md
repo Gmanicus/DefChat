@@ -24,7 +24,7 @@ Upon deactivating the commandline, your message (if any) will be displayed in th
 
 # Version 0.05 - Jan. 5th, 2018
 
-Initial commit. Chat asset added to Defold community website.
+Initial commit. Chat asset added to Defold community websites and Github repository.
 
 ------
 
