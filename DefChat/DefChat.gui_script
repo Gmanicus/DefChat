@@ -102,7 +102,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("message") then							-- post message to "DefChat" object with message_id of "message" to print something from another script
 		self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
 		self.chatProperties = get_length(self,message)
-		buildMessage(self,message)
+		if get_command(self,message[1]) == false then
+			buildMessage(self,message)
+		end
 		print("DEF_CHAT:CHAT:RECEIVED_MESSAGE: " .. message[1])
 		print("DEF_CHAT:STRING:LENGTH: " .. self.chatLen)
 	end
@@ -122,7 +124,9 @@ function on_input(self, action_id, action)
 			if string.match(self.chat,"%S") ~= nil then
 				self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
 				self.chatProperties = get_length(self,self.chat)
-				buildMessage(self,self.chat)								--Display new message
+				if get_command(self, self.chat) == false then
+					buildMessage(self,self.chat)					--Display new message
+				end
 				print("DEF_CHAT:CHAT:RECEIVED_TEXT: " .. self.chat)
 				print("DEF_CHAT:STRING:LENGTH: " .. self.chatLen)
 			end
@@ -186,7 +190,7 @@ end
 
 function bumpChat(self,txt)
 	self.messageH = (self.chatProperties.height + ((self.linebreaksTotal * (self.chatProperties.height/(self.linebreaksTotal+1))) / 2)) -- manual calculation which helps compensate for space change with linebreaks. NEEDS WORK.
-	if get_table_length(self.chatNodes) >= 8 then
+	if get_table_length(self.chatNodes) > 8 then
 		self.dlt = self.dlt + 1
 		gui.delete_node(self.chatNodes[self.dlt])
 		self.chatNodes[self.dlt] = nil
@@ -359,6 +363,43 @@ function caret(self)
 	end
 end
 
+function clear_chat(self)
+	get_table_length(self.chatNodes)
+	for n=1,get_table_length(self.chatNodes),1 do
+		self.dlt = self.dlt + 1
+		gui.delete_node(self.chatNodes[self.dlt])
+		self.chatNodes[self.dlt] = nil
+	end
+end
+
+function get_command(self,string)
+	local found = false
+	self.command = ""
+	self.chatCommands = {
+
+		{
+			command = "clear",
+			func = "clear_chat"
+		}
+		
+		
+	
+	}
+	
+	if string.sub(string, 1,1) == ">" then
+		local read = string.sub(string, 2,-1)
+		self.command = string.match(read,"%a+") --"(%w+)(.+)")
+	end
+	
+	for i=1,get_table_length(self.chatCommands),1 do
+		if self.chatCommands[i].command == self.command then
+			_G[self.chatCommands[i].func](self)
+			found = true
+		end
+	end
+	return found
+end
+	
 local it = ""
 
 function get_length(self,it)
