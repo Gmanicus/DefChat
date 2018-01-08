@@ -19,3 +19,19 @@ Upon deactivating the commandline, your message (if any) will be displayed in th
 * All previous messages are bumped the appropriate space to make way for the new node.
 
 * All nodes after 8 are wiped to save on memory and processing. This also provides shielding from the chat taking over the screen because chatbox cropping is currently not implemented.
+
+------
+
+# Version 0.05 - Jan. 5th, 2018
+
+Initial commit. Chat asset added to Defold community website.
+
+------
+
+# Version 0.1 - Jan. 7th, 2018
+
+FIXED: Backspacing causing odd duplication and deformed commandline text
+FIXED: Caret extending beyond commandline width
+
+CHANGED: Commandline text allowed width to make text fit neater and more evenly
+CHANGED: get_length(self, it) function for mutli-use with a return statement instead of a single variable equation
