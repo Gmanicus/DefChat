@@ -3,6 +3,8 @@ Chat asset for the Defold engine
 
 ![alt text](https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT.gif)
 
+Untested on non-Windows devices. Anyone willing to test and report back to me the details would be helpful.
+
 -----------------------------------------------------------------------------------------------
 DefChat is a chatterbox. He really likes repeating what everyone says. The good thing is that he's good about keeping things neat and orderly.
 
