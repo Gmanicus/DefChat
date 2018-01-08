@@ -42,4 +42,4 @@ CHANGED: get_length(self, it) function for mutli-use with a return statement ins
 
 # Version 0.105 - Jan. 8th, 2018
 
-ADDED: Commands. You can now make your own functions, insert the call name and function name into the self.chatCommands table, and have it accessable using the '>' key.
+ADDED: Commands. You can now make your own functions, insert the call name and function name into the self.chatCommands table, and have it accessible using the '>' key.
