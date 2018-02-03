@@ -3,12 +3,12 @@ Chat asset for the Defold engine
 
 ![alt text](https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT.gif)
 
-Untested on non-Windows devices. Anyone willing to test and report the details back to me would be helpful.
+Untested on non-Windows devices.
 
 -----------------------------------------------------------------------------------------------
 DefChat is a chat asset for any Defold project. It activates on press of the ‘enter’ key, which allows you to start typing. Once the ‘enter’ key is pressed again the message is read and fit into the space above it.
 
-Other scripts can have their messages printed through the message-passing system as well. This allows for easy adaptability for Multiplayer projects especially.
+Other scripts can have their messages printed through the message-passing system as well. This allows for easy adaptability, Multiplayer projects especially.
 
 From Character-Precise linebreaking to the ability to stamp messages overtime, it’s got it.
 
@@ -40,4 +40,15 @@ CHANGED: get_length(self, it) function for mutli-use with a return statement ins
 
 # Version 0.105 - Jan. 8th, 2018
 
-ADDED: Commands. You can now make your own functions, insert the call name and function name into the self.chatCommands table, and have it accessible using the '>' key.
+ADDED: Commands. You can now make your own functions, insert the call name and function name into the self.chatCommands table, and have it accessible using the '>' key.  
+ADDED: 'clear' command. It wipes all currently displayed messages.
+
+------
+
+# Version 0.5 - Feb. 2nd, 2018 - MILESTONE
+
+FIXED: Caret starting at the length of the previously typed chat.  
+FIXED: Commands not being recieved because of string case.  
+
+ADDED: Frame to GUI. Messages are now cropped to the boundaries of the chat box.
+
