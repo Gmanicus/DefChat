@@ -131,6 +131,8 @@ function on_input(self, action_id, action)
 				print("DEF_CHAT:STRING:LENGTH: " .. self.chatLen)
 			end
 			self.chat = ""
+			self.hiddenChat.text = ""
+			self.hiddenChat.size = 0
 			gui.set_text(gui.get_node("CL_Text"),self.chat)
 			gui.set_color(self.cL,vmath.vector4(.8,.8,.8,.3))
 		end
@@ -389,6 +391,7 @@ function get_command(self,string)
 	if string.sub(string, 1,1) == ">" then
 		local read = string.sub(string, 2,-1)
 		self.command = string.match(read,"%a+") --"(%w+)(.+)")
+		self.command = string.lower(self.command)
 	end
 	
 	for i=1,get_table_length(self.chatCommands),1 do
