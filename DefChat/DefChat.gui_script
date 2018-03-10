@@ -8,7 +8,6 @@ local send = {[5] = "send"}
 local wait1 = {[5] = "wait1"}
 local respond = {[5] = "respond"}
 local msgStrings = {}
-local notes = {[1] = "Note 1", [2] = "Note 2", [3] = "Note 3"}
 local thisBtnNums = {}; local thisTltNums = {}
 
 
@@ -28,7 +27,7 @@ function init(self)
 	self.dlt = 0
 
 	-- -- Tables
-	self.actStamp = {}
+	self.actStamp = {go = false, instant = false}
 	
 	self.hiddenChat = {
 	
@@ -88,10 +87,10 @@ end
 function update(self, dt)
 	
 	-- Update alarms
-	if self.actStamp[1] == true then								-- If actStamp {go, immediate}. Go means to start stamping when true, immediate is an argument to make chat appear immediately.
-		alarm(self.typeSpeed,wait1)										-- "typeSpeed" is a global variable that can be change to make stamp run faster. The smaller the number, the more periodically it fires.
+	if self.actStamp.go == true then								-- If actStamp {go, immediate}. Go means to start stamping when true, immediate is an argument to make chat appear immediately.
+		alarm(self.typeSpeed,wait1)										-- "typeSpeed" is a variable that can be change to make stamp run faster. The smaller the number, the more periodically it fires.
 		if wait1[1] == true then									-- Check "alarm.lua". This allows it to fire periodically.
-			stamp(self,self.actStamp[2])
+			stamp(self,self.actStamp.instant)
 		end
 	end
 	-- End of updating alarms
@@ -137,7 +136,8 @@ function on_input(self, action_id, action)
 			gui.set_color(self.cL,vmath.vector4(.8,.8,.8,.3))
 		end
 	end
-																	-- End of enter switcheruner
+																			-- End of enter switcheruner
+	
 	if self.enter == true then
 		if action_id == hash("text") then
 			if string.len(action.text) == 1 then
@@ -191,7 +191,7 @@ function hideChar(self,switch,key)
 end
 
 function bumpChat(self,txt)
-	self.messageH = (self.chatProperties.height + ((self.linebreaksTotal * (self.chatProperties.height/(self.linebreaksTotal+1))) / 2)) -- manual calculation which helps compensate for space change with linebreaks. NEEDS WORK.
+	self.messageH = (self.chatProperties.height) -- + ((self.linebreaksTotal * (self.chatProperties.height/(self.linebreaksTotal+1))) / 2)) -- manual calculation which helps compensate for space change with linebreaks. NEEDS WORK.
 	if get_table_length(self.chatNodes) > 8 then
 		self.dlt = self.dlt + 1
 		gui.delete_node(self.chatNodes[self.dlt])
@@ -262,7 +262,7 @@ function buildMessage(self,txt)
 		local linebreak = linebreaks[b]
 		linebreak = linebreak - prevLinebreak
 		formattedString = string.sub(formattedString,1,linebreak)
-		takeaway = string.sub(txt,(linebreaks[b]+1),-1)					 -- Takeaway prints with a copy of the letter of the previous line for some mathmatical reason. This negates that.
+		takeaway = string.sub(txt,(linebreaks[b]+1),-1)					 -- Takeaway prints with a copy of the last letter of the previous line for some mathmatical reason. This negates that.
 		prevLinebreak = prevLinebreak + linebreak
 		print("DEF_CHAT:LINEBREAKER:LINEBREAKING_AT: " .. linebreak .. "\n")
 		print("DEF_CHAT:LINEBREAKER:~PREFIX~_STRING_FOR_LINEBREAK_INSERTION: " .. formattedString)
@@ -278,7 +278,7 @@ function buildMessage(self,txt)
 	-- CHAT_BUILDER
 
 	self.chatProperties = gui.get_text_metrics(self.font.name,self.FSTotal,self.lineWidth,true)
-	self.linebreakAdjust = vmath.vector3(self.chatPos.x,(self.chatPos.y + (self.linebreaksTotal * (self.chatProperties.height/(self.linebreaksTotal+1))) / 1.5),1) -- manual calculation which helps compensate for space change with linebreaks. NEEDS WORK.
+	self.linebreakAdjust = vmath.vector3(self.chatPos.x,(self.chatPos.y + (self.chatProperties.height/2)),self.chatPos.z) -- (self.linebreaksTotal * (self.chatProperties.height/(self.linebreaksTotal+1))) / 1.5),1) -- manual calculation which helps compensate for space change with linebreaks. NEEDS WORK.
 	
 	bumpChat(self,txt)
 
@@ -287,7 +287,11 @@ function buildMessage(self,txt)
 	
 	self.chatNodes[self.messages] = gui.new_text_node(self.chatPos,"")
 	self.chatMsgs[self.messages] = self.FSTotal
-	self.actStamp[1] = true; self.actStamp[2] = false
+
+	
+	self.actStamp.go = true; self.actStamp.instant = true -- This turns on the stamping function. (.go = true) means start stamping. (.instant = false) tells the function whether it should print instantly or over time.
+
+	
 	msgStrings[self.messages] = self.FSTotal
 	defChat(self,self.chatNodes[self.messages])
 	txt = ""
@@ -305,27 +309,29 @@ function stamp(self,immediate)
 		total = ""
 	end
 	if immediate == true then
+		print("DEF_CHAT:INSTANT_STAMPED:\n" .. msgStrings[self.stamped + 1] .. "\n")
 		gui.set_text(self.chatNodes[self.stamped + 1],msgStrings[self.stamped + 1])
 		self.stamped = self.stamped + 1
 		msgStrings[self.stamped - 1] = nil
-		self.actStamp[1] = false
-	end
-	let = let + 1
-	local maxLet = string.len(msgStrings[self.stamped + 1])
-	local letter = string.sub(msgStrings[self.stamped + 1],let,let)
-	total = total .. letter
-	gui.set_text(self.chatNodes[self.stamped + 1],total)
+		self.actStamp.go = false
+	else
+		let = let + 1
+		local maxLet = string.len(msgStrings[self.stamped + 1])
+		local letter = string.sub(msgStrings[self.stamped + 1],let,let)
+		total = total .. letter
+		gui.set_text(self.chatNodes[self.stamped + 1],total)
 		
-	if let >= maxLet then
-		print("DEF_CHAT:STAMPED:\n" .. total .. "\n")
-		total = ""
-		let = 0
-		self.stamped = self.stamped + 1
-		msgStrings[self.stamped - 1] = nil
-		self.actStamp[1] = false
+		if let >= maxLet then
+			print("DEF_CHAT:STAMPED:\n" .. total .. "\n")
+			total = ""
+			let = 0
+			self.stamped = self.stamped + 1
+			msgStrings[self.stamped - 1] = nil
+			self.actStamp.go = false
+		end
 	end
 	if self.messages > self.stamped then
-		self.actStamp[1] = true
+		self.actStamp.go = true
 	end
 end
 	
