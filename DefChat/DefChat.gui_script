@@ -1,5 +1,5 @@
 require "DefChat/alarm"
-require "DefChat/DefChat_properties"
+require "main/DefChat_properties"
 
 local iter = 0
 
