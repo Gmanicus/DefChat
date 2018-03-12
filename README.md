@@ -22,6 +22,25 @@ Then go to the toolbar at the top of your editor, select "Project" and click "Fe
 
 ------
 
+# Modifiable Properties
+
+I set aside a properties module for DefChat to hook to that will not be overwritten every update. This allows you to make modifications, and not have those set back to the default for every update. Current properties:
+
+Properties = {
+
+	fonts = {                                         -- Set fonts for DEF_CHAT to use
+		default = {name = hash("Example")},
+		Second_Example = {name = hash("Second_Example")}
+	},
+
+	stamp_text_instant = true,                        -- Set stamp property. (True) instant messages. (False) stamped messages.
+
+	commandline_color = vmath.vector4(.8,.8,.8,0.3)   -- Set inactive command line color.
+	
+}
+
+------
+
 # Version 0.05 - Jan. 5th, 2018
 
 Initial commit. Chat asset added to Defold community websites and Github repository.
