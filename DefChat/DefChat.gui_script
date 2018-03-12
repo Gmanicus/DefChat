@@ -1,16 +1,14 @@
 require "DefChat/alarm"
+require "DefChat/DefChat_properties"
 
 local iter = 0
 
 -- ALARMS
 local caret_alarm = {name = "CARET_ALARM", time = 0.48}
---local send = {[5] = "send"}
-local stamp_alarm = {name = "STAMP_ALARM", time = 0.0001}
---local respond = {[5] = "respond"}
+local stamp_alarm = {name = "STAMP_ALARM", time = 0.001}
 
 
 local msgStrings = {}
-local thisBtnNums = {}; local thisTltNums = {}
 
 
 function init(self)
@@ -71,13 +69,18 @@ function init(self)
 	
 	-- -- < INITIALIZE >
 	
-	gui.set_color(self.cL,vmath.vector4(.8,.8,.8,0.3))			-- Start with a darkened command line
+	gui.set_color(self.cL,Properties.commandline_color)			-- Set command line color to specified property.
 
-	self.font = fonts.Example									-- Set default font
+	self.font = Properties.fonts.default									-- Set default font to specified property.
 	print("DEF_CHAT:FONTS:ACQUIRED: "); pprint(fonts)
 	pprint("DEF_CHAT:FONT:DEFAULT: ".. self.font.name)
 
-	self.stamp_text.instant = true
+	self.chatCommands = Properties.commands
+
+	self.stamp_text.instant = Properties.stamp_text_instant
+
+	caret_alarm.time = Properties.caret_speed
+	stamp_alarm.time = Properties.stamp_speed
 	
 	-- Example message:
 	local ex_Message = {text = "Hello world, I'm DEF_CHAT"}
@@ -379,16 +382,6 @@ end
 function get_command(self,string)
 	local found = false
 	self.command = ""
-	self.chatCommands = {
-
-		{
-			command = "clear",
-			func = "clear_chat"
-		}
-		
-		
-	
-	}
 	
 	if string.sub(string, 1,1) == ">" then
 		local read = string.sub(string, 2,-1)
