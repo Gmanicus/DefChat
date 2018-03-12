@@ -43,11 +43,6 @@ function init(self)
 	
 
 	-- -- DEFAULTS
-
-	fonts = {
-		Example = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
-		Second_Example = {name = hash("Second_Example")}
-	}
 	
 	self.cN = gui.get_node("Caret")
 	self.cL = gui.get_node("CommandLine")
