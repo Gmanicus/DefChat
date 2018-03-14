@@ -66,6 +66,8 @@ function init(self)
 	
 	gui.set_color(self.cL,Properties.commandline_color)			-- Set command line color to specified property.
 
+	self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
+
 	self.font = Properties.fonts.default									-- Set default font to specified property.
 	print("DEF_CHAT:FONTS:ACQUIRED: "); pprint(fonts)
 	pprint("DEF_CHAT:FONT:DEFAULT: ".. self.font.name)
