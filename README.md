@@ -1,7 +1,7 @@
 # DefChat
 Chat asset for the Defold engine
 
-![alt text](https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT vs 0.555.gif)
+![alt text](https://github.com/GamingBud/DefChat/blob/master/misc/DEF_CHAT%20vs%200.555.gif)
 
 Untested on non-Windows devices.
 
