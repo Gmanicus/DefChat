@@ -28,7 +28,7 @@ Then go to the toolbar at the top of your editor, select "Project" and click "Fe
 
 I set aside a properties module for DefChat to hook to that will not be overwritten every update. This allows you to make modifications, and not have those set back to the default for every update. Current properties:
 
-{
+{  
 Properties = {
 
 	fonts = {
@@ -53,7 +53,7 @@ stamp_speed = 0.001,
 
 commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
 
-}
+}  
 }
 
 ------
