@@ -39,7 +39,7 @@ Properties = {
 
 	{
 		command = "clear",
-		func = "clear_chat"
+		func = "clear_chat",
 		args = {"amount"}
 	}
 
