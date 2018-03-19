@@ -28,32 +28,35 @@ Then go to the toolbar at the top of your editor, select "Project" and click "Fe
 
 I set aside a properties module for DefChat to hook to that will not be overwritten every update. This allows you to make modifications, and not have those set back to the default for every update. Current properties:
 
+_ = {
 
-> Properties = {
+	Properties = {
 
-	fonts = {
-		default = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
-		Second_Example = {name = hash("Second_Example")}
+		fonts = {
+			default = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
+			Second_Example = {name = hash("Second_Example")}
+		},
+
+		commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
+
+		{
+			command = "clear",
+			func = "clear_chat",
+			args = {"amount"}
+		}
+
 	},
 
-	commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
+	stamp_text_instant = true,										-- Set stamp property. (True)  instant messasge. (False) stamped message.
 
-	{
-		command = "clear",
-		func = "clear_chat",
-		args = {"amount"}
-	}
+	caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
+	stamp_speed = 0.001,
 
-},
+	commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
 
-> stamp_text_instant = true,										-- Set stamp property. (True)  instant messasge. (False) stamped message.
-
-> caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
-> stamp_speed = 0.001,
-
-> commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
-
-}  
+	}  
+	
+}
 
 ------
 
