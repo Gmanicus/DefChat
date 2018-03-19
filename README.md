@@ -1,7 +1,7 @@
 # DefChat
 Chat asset for the Defold engine
 
-![alt text](https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT.gif)
+![alt text](https://raw.githubusercontent.com/GamingBud/DefChat/master/misc/DEF_CHAT vs 0.555.gif)
 
 Untested on non-Windows devices.
 
@@ -22,6 +22,8 @@ Then go to the toolbar at the top of your editor, select "Project" and click "Fe
 
 ------
 
+------
+
 # Modifiable Properties
 
 I set aside a properties module for DefChat to hook to that will not be overwritten every update. This allows you to make modifications, and not have those set back to the default for every update. Current properties:
@@ -35,20 +37,21 @@ Properties = {
 
 	commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
 
-		{
-			command = "clear",
-			func = "clear_chat"
-		}
+	{
+		command = "clear",
+		func = "clear_chat"
+		args = {"amount"}
+	}
 
-	},
+},
 
-	stamp_text_instant = true,										-- Set stamp property. (True) instant messasge. (False) stamped message.
+stamp_text_instant = true,										-- Set stamp property. (True) instant messasge. (False) stamped message.
 
-	caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
-	stamp_speed = 0.001,
+caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
+stamp_speed = 0.001,
 
-	commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
-	
+commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
+
 }
 
 ------
@@ -72,7 +75,6 @@ CHANGED: get_length(self, it) function for mutli-use with a return statement ins
 # Version 0.105 - Jan. 8th, 2018
 
 ADDED: Commands. You can now make your own functions, insert the call name and function name into the self.chatCommands table, and have it accessible using the '>' key.  
-
 ADDED: 'clear' command. It wipes all currently displayed messages.
 
 ------
@@ -84,3 +86,10 @@ FIXED: Commands not being recieved because of string case.
 
 ADDED: Frame to GUI. Messages are now cropped to the boundaries of the chat box.
 
+-----
+
+# Version 0.555 - March 19th, 2018
+
+ADDED: Command arguments. You can now make your own command, and have it gather each argument from the input in succession. For example, >clear 2. The clear_chat function would recieve this and only delete 2 messages.  
+
+CHANGED: Organization to make things easier to understand/follow along.
