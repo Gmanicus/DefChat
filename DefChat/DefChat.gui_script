@@ -69,7 +69,7 @@ function init(self)
 	self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
 
 	self.font = Properties.fonts.default									-- Set default font to specified property.
-	print("DEF_CHAT:FONTS:ACQUIRED: "); pprint(fonts)
+	print("DEF_CHAT:FONTS:ACQUIRED: "); pprint(Properties.fonts)
 	pprint("DEF_CHAT:FONT:DEFAULT: ".. self.font.name)
 
 	self.chatCommands = Properties.commands
@@ -367,9 +367,11 @@ function caret(self)
 	end
 end
 
-function clear_chat(self)
-	get_table_length(self.chatNodes)
-	for n=1,get_table_length(self.chatNodes),1 do
+function clear_chat(self,amt)
+	if amt == nil then
+		amt = get_table_length(self.chatNodes)
+	end
+	for n=1,amt,1 do
 		self.dlt = self.dlt + 1
 		gui.delete_node(self.chatNodes[self.dlt])
 		self.chatNodes[self.dlt] = nil
@@ -378,17 +380,40 @@ end
 
 function get_command(self,string)
 	local found = false
+	local args = {}
+	local cutout = 0
+	
 	self.command = ""
 	
 	if string.sub(string, 1,1) == ">" then
 		local read = string.sub(string, 2,-1)
 		self.command = string.match(read,"%a+") --"(%w+)(.+)")
 		self.command = string.lower(self.command)
+
+		cutout = string.len(self.command)
 	end
 	
 	for i=1,get_table_length(self.chatCommands),1 do
 		if self.chatCommands[i].command == self.command then
-			_G[self.chatCommands[i].func](self)
+
+			if self.chatCommands[i].args ~= nil then
+				for a=1,get_table_length(self.chatCommands[i].args),1 do
+
+					read = string.sub(string, 2+cutout,-1)
+					local arg = string.match(read,"%a+") --"(%w+)(.+)")
+					if arg == nil then
+						arg = string.match(read,"%d+")
+					else
+						arg = string.lower(arg)
+					end
+
+					cutout = cutout + string.len(arg)
+					
+					args[a] = arg
+				end
+			end
+
+			_G[self.chatCommands[i].func](self,unpack(args))
 			found = true
 		end
 	end
