@@ -3,16 +3,15 @@ require "main/DefChat_properties"
 
 local iter = 0
 
--- ALARMS
-local caret_alarm = {name = "CARET_ALARM", time = 0.48}
-local stamp_alarm = {name = "STAMP_ALARM", time = 0.001}
-
-
 local msgStrings = {}
 
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+
+	-- ALARMS
+	self.caret_alarm = {name = "CARET_ALARM", time = 0.48}
+	self.stamp_alarm = {name = "STAMP_ALARM", time = 0.001}
 	
 	-- < INTEGERS
 	self.messages = 0
@@ -76,8 +75,8 @@ function init(self)
 
 	self.stamp_text.instant = Properties.stamp_text_instant
 
-	caret_alarm.time = Properties.caret_speed
-	stamp_alarm.time = Properties.stamp_speed
+	self.caret_alarm.time = Properties.caret_speed
+	self.stamp_alarm.time = Properties.stamp_speed
 	
 	-- Example message:
 	local ex_Message = {text = "Hello world, I'm DEF_CHAT"}
@@ -90,7 +89,7 @@ function update(self, dt)
 	if self.stamp_text.go == true then
 		if self.stamp_text.instant == true then
 			stamp(self,self.stamp_text.instant)
-		elseif Alarm(stamp_alarm) == true then
+		elseif Alarm(self.stamp_alarm) == true then
 			stamp(self)
 		end
 	end
@@ -352,7 +351,7 @@ function caret(self)
 			end
 			gui.set_position(self.cN,vmath.vector3(self.caretPos.x+self.chatSize,self.caretPos.y,self.caretPos.z))
 		end
-		if Alarm(caret_alarm) == true then
+		if Alarm(self.caret_alarm) == true then
 			self.caret = self.caret * -1
 			if self.caret == 1 then
 				gui.set_text(self.cN,"|")
