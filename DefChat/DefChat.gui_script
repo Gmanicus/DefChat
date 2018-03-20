@@ -403,6 +403,7 @@ function get_command(self,string)
 					local arg = string.match(read,"%a+") --"(%w+)(.+)")
 					if arg == nil then
 						arg = string.match(read,"%d+")
+						arg = tonumber(arg)
 					else
 						arg = string.lower(arg)
 					end
