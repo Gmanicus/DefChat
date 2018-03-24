@@ -20,6 +20,9 @@ Properties = {
 	caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
 	stamp_speed = 0.001,
 
-	commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
+	commandline_color = {
+		active = vmath.vector4(.8,.8,.8,0.9),					-- Set command line color.
+		idle = vmath.vector4(.2,.2,.2,0.5)
+	}
 	
 }
