@@ -63,7 +63,7 @@ function init(self)
 	
 	-- -- < INITIALIZE >
 	
-	gui.set_color(self.cL,Properties.commandline_color)			-- Set command line color to specified property.
+	gui.set_color(self.cL,Properties.commandline_color.idle)			-- Set command line color to specified property.
 
 	self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
 
@@ -114,7 +114,7 @@ function on_input(self, action_id, action)
 	if (action_id == hash("enter") and action.released) then 		-- If enter is pressed, it basically flips a switch value. On/off/on/off etc.
 		if self.enter == false then
 			self.enter = true
-			gui.set_color(self.cL,vmath.vector4(.8,.8,.8,1))
+			gui.set_color(self.cL,Properties.commandline_color.active)
 		elseif self.enter == true then
 			self.enter = false
 			print("DEF_CHAT:HIDDEN_CHARACTERS: " .. self.dltMash)
@@ -132,7 +132,7 @@ function on_input(self, action_id, action)
 			self.hiddenChat.text = ""
 			self.hiddenChat.size = 0
 			gui.set_text(gui.get_node("CL_Text"),self.chat)
-			gui.set_color(self.cL,vmath.vector4(.8,.8,.8,.3))
+			gui.set_color(self.cL,Properties.commandline_color.idle)
 		end
 	end
 																			-- End of enter switcheruner
