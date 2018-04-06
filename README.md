@@ -16,7 +16,9 @@ From Character-Precise linebreaking to the ability to stamp messages overtime, i
 
 # Installation Guide
 
-To install DefChat, you need to add it as a library dependency. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list.
+https://github.com/GamingBud/DefChat/archive/master.zip
+
+To install DefChat, you need to add it as a library dependency with the above link. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list.
 
 Then go to the toolbar at the top of your editor, select "Project" and click "Fetch Libraries". You should see the "DefChat" folder appear in a few seconds.
 
