@@ -45,16 +45,16 @@ placeholder = {
 			args = {"amount"}
 		}
 
-},
+	},
 
-stamp_text_instant = true,										-- Set stamp property. (True)  instant messasge. (False) stamped message.
+	stamp_text_instant = true,										-- Set stamp property. (True)  instant messasge. (False) stamped message.
 
-caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
-stamp_speed = 0.001,
+	caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
+	stamp_speed = 0.001,
 
-commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
+	commandline_color = vmath.vector4(.8,.8,.8,0.3)					-- Set command line color.
 
-}  
+	}  
 }
 
 ------
