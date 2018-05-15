@@ -20,12 +20,14 @@ function init(self)
 
 	-- < Booleans
 	self.enter = false
+	self.alt = false
 	self.caretActive = -1 -- -1 = False, 1 = true
 	-- />
 
 	-- < STRINGS AND THINGS
 	self.chat = ""
 	self.dltMash = ""
+	self.alt_seq = ""
 	-- />
 
 	-- < TABLES
@@ -37,6 +39,8 @@ function init(self)
 	}
 
 	self.chatProperties = {}
+
+	self.draw_lines = {}
 	-- />
 
 	
@@ -46,6 +50,7 @@ function init(self)
 	self.cN = gui.get_node("Caret")
 	self.cL = gui.get_node("CommandLine")
 	self.cB = gui.get_node("Chatbox")
+	self.Fr = gui.get_node("Frame")
 	self.cT = gui.get_node("Chat_Text")
 	
 	self.chatNodes = {}
@@ -57,15 +62,26 @@ function init(self)
 	self.caretPos = gui.get_position(self.cN)
 	self.chatPos = gui.get_position(self.cT)
 	
-	self.clProperties = {width = gui.get_size(self.cL).x, height = gui.get_size(self.cL).y},
+	self.clProperties = {width = gui.get_size(self.cL).x, height = gui.get_size(self.cL).y}
 
+	local total = ""
+	local l = 0
 
+	while true do
+		l = l + 1
+		total = total .. "a"
+		local thisLine = gui.get_text_metrics(Properties.fonts.default.name,total,self.clProperties.width)
+		if thisLine.width >= self.clProperties.width then
+			total = string.sub(total,1,l-4)
+			self.lineWidth = gui.get_text_metrics(Properties.fonts.default.name,total,self.clProperties.width)
+			self.lineWidth = self.lineWidth.width
+			break
+		end
+	end
 	
 	-- -- < INITIALIZE >
 	
 	gui.set_color(self.cL,Properties.commandline_color.idle)			-- Set command line color to specified property.
-
-	self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
 
 	self.font = Properties.fonts.default									-- Set default font to specified property.
 	print("DEF_CHAT:FONTS:ACQUIRED: "); pprint(Properties.fonts)
@@ -84,7 +100,10 @@ function init(self)
 end
 
 function update(self, dt)
-	
+	-- Take out comments for debugging linebreaks
+	--msg.post("@render:", "draw_line", { start_point = self.draw_lines[1].from, end_point = self.draw_lines[1].to, color = vmath.vector4(1, 1, 1, 1) } )
+	--msg.post("@render:", "draw_line", { start_point = self.draw_lines[2].from, end_point = self.draw_lines[2].to, color = vmath.vector4(1, 1, 1, 1) } )
+
 	-- Update alarms
 	if self.stamp_text.go == true then
 		if self.stamp_text.instant == true then
@@ -111,6 +130,38 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
+	if action_id == hash("0") and action.pressed then
+		action_id = hash("text")
+		action.text = "0"
+	elseif action_id == hash("1") and action.pressed then
+		action_id = hash("text")
+		action.text = "1"
+	elseif action_id == hash("2") and action.pressed then
+		action_id = hash("text")
+		action.text = "2"
+	elseif action_id == hash("3") and action.pressed then
+		action_id = hash("text")
+		action.text = "3"
+	elseif action_id == hash("4") and action.pressed then
+		action_id = hash("text")
+		action.text = "4"
+	elseif action_id == hash("5") and action.pressed then
+		action_id = hash("text")
+		action.text = "5"
+	elseif action_id == hash("6") and action.pressed then
+		action_id = hash("text")
+		action.text = "6"
+	elseif action_id == hash("7") and action.pressed then
+		action_id = hash("text")
+		action.text = "7"
+	elseif action_id == hash("8") and action.pressed then
+		action_id = hash("text")
+		action.text = "8"
+	elseif action_id == hash("9") and action.pressed then
+		action_id = hash("text")
+		action.text = "9"
+	end
+	
 	if (action_id == hash("enter") and action.released) then 		-- If enter is pressed, it basically flips a switch value. On/off/on/off etc.
 		if self.enter == false then
 			self.enter = true
@@ -120,7 +171,6 @@ function on_input(self, action_id, action)
 			print("DEF_CHAT:HIDDEN_CHARACTERS: " .. self.dltMash)
 			self.dltMash = ""
 			if string.match(self.chat,"%S") ~= nil then
-				self.lineWidth = self.clProperties.width - (self.clProperties.width/15)
 				self.chatProperties = get_length(self,self.chat)
 				if get_command(self, self.chat) == false then
 					buildMessage(self,self.chat)					--Display new message
@@ -137,20 +187,33 @@ function on_input(self, action_id, action)
 	end
 																			-- End of enter switcheruner
 	
+	
 	if self.enter == true then
 		if action_id == hash("text") then
-			if string.len(action.text) == 1 then
-				self.chat = self.chat .. action.text
-				self.chatProperties = get_length(self,self.chat)
-				if self.chatProperties.width >= self.lineWidth then
-					hideChar(self,true,action.text)						-- When the chat exceeds the commandline, this trims it's backend
-				else
-					self.hiddenChat.text = self.chat
+			if self.alt == true then
+				local seq = string.match(action.text,"%d+")
+				if seq ~= nil then
+					if string.len(self.alt_seq) > 0 then
+						local sp_char = string.len(self.chat)
+						self.chat = string.sub(self.chat, 1, sp_char-1)
+					end
+					self.alt_seq = self.alt_seq .. seq
+					self.chat = self.chat .. string.char(tonumber(self.alt_seq))
 				end
-				gui.set_text(gui.get_node("CL_Text"), self.hiddenChat.text)
+			else
+				self.chat = self.chat .. action.text
 			end
+			
+			self.chatProperties = get_length(self,self.chat)
+			if self.chatProperties.width >= self.lineWidth then
+				hideChar(self,true,action.text)						-- When the chat exceeds the commandline, this trims it's backend
+			else
+				self.hiddenChat.text = self.chat
+			end
+			gui.set_text(gui.get_node("CL_Text"), self.hiddenChat.text)
 		elseif action_id == hash("backspace") and self.chatLen > 0 then
 			if action.pressed or action.repeated then
+				self.alt_seq = ""
 				self.chat = string.sub(self.chat, 1, -2)
 				self.chatProperties = get_length(self,self.chat)
 				if self.chatProperties.width >= self.lineWidth then
@@ -163,19 +226,48 @@ function on_input(self, action_id, action)
 		end
 		self.hiddenChat.size = get_length(self, self.hiddenChat.text)
 	end
+
+	if action_id == hash("alt") and action.repeated then
+		if self.enter == true then
+			self.alt = true
+		end
+	elseif action_id == hash("alt") and action.released then
+		self.alt = false
+		self.alt_seq = ""
+	end
 end
 
 local dltNum = 0
 local dltChar = ""
 
 function hideChar(self,switch,key)
+	local perfect_CP = get_length(self,self.hiddenChat.text)
 	if switch == true then
-		dltChar = string.sub(self.hiddenChat.text,1,1)
-		local rev = string.reverse(self.hiddenChat.text)
-		self.hiddenChat.text = string.sub(rev,1,-2)
-		self.hiddenChat.text = string.reverse(self.hiddenChat.text) .. key
-		dltNum = dltNum + 1
-		self.dltMash = self.dltMash .. dltChar
+		for k=1,string.len(key),1 do
+			perfect_CP = get_length(self,self.hiddenChat.text)
+			if perfect_CP.width >= self.lineWidth then
+				print("SPACE TAKEN / SPACE AVAILABLE: " .. perfect_CP.width .. "x" .. self.lineWidth)
+				print("KEY OVER: " .. k)
+				print("UNHIDDEN CHAT BEFORE, TO CLARIFY: " .. self.hiddenChat.text)
+				dltChar = string.sub(self.hiddenChat.text,1,1)
+				local rev = string.reverse(self.hiddenChat.text)
+				self.hiddenChat.text = string.sub(rev,1,-2)
+				self.hiddenChat.text = string.reverse(self.hiddenChat.text) .. string.sub(key, k,k)
+				print("UNHIDDEN CHAT AFTER, TO CLARIFY: " .. self.hiddenChat.text)
+				dltNum = dltNum + 1
+				self.dltMash = self.dltMash .. dltChar
+				if perfect_CP.width >= self.lineWidth then
+					dltChar = string.sub(self.hiddenChat.text,1,1)
+					local rev = string.reverse(self.hiddenChat.text)
+					self.hiddenChat.text = string.sub(rev,1,-2)
+					self.hiddenChat.text = string.reverse(self.hiddenChat.text)
+					dltNum = dltNum + 1
+					self.dltMash = self.dltMash .. dltChar
+				end
+			else
+				self.hiddenChat.text = self.hiddenChat.text .. string.sub(key, k,k)
+			end
+		end
 	else
 		if dltNum ~= 0 then
 			local rev = string.reverse(self.hiddenChat.text)
@@ -190,7 +282,7 @@ function hideChar(self,switch,key)
 end
 
 function bumpChat(self,txt)
-	self.messageH = (self.chatProperties.height) -- Calculation that compensate for space change with linebreaks.
+	self.messageH = self.dominoe_adjustment -- Compensates for space change with linebreaks.
 	if get_table_length(self.chatNodes) > 8 then
 		self.dlt = self.dlt + 1
 		gui.delete_node(self.chatNodes[self.dlt])
@@ -217,7 +309,7 @@ function buildMessage(self,txt)
 	local total = ""
 	local linebreaks = {}
 	local l = 0
-	
+
 	while true do
 		l = l + 1
 		if l > self.chatLen then
@@ -245,7 +337,7 @@ function buildMessage(self,txt)
 	local formattedString = txt
 	local takeaway = ""
 	local prevLinebreak = 0
-	
+
 	if linebreaks[1] == nil then
 		self.FSTotal = txt
 	else
@@ -253,7 +345,7 @@ function buildMessage(self,txt)
 	end
 
 	self.linebreaksTotal = get_table_length(linebreaks)
-	
+
 	for b=1,self.linebreaksTotal,1 do
 		local linebreak = linebreaks[b]
 		linebreak = linebreak - prevLinebreak
@@ -274,24 +366,59 @@ function buildMessage(self,txt)
 	-- CHAT_BUILDER
 
 	self.chatProperties = gui.get_text_metrics(self.font.name,self.FSTotal,self.lineWidth,true)
-	self.linebreakAdjust = vmath.vector3(self.chatPos.x,(self.chatPos.y + (self.chatProperties.height/2)),self.chatPos.z) -- Calculation which compensates for space change with linebreaks.
-	
+
+	self.lb_h_adjustment, self.dominoe_adjustment = get_linebreak_adjustment(self.FSTotal, self.font.name)
+
+	self.lb_adjustment = vmath.vector3(self.chatPos.x,self.chatPos.y + (self.lb_h_adjustment/2), self.chatPos.z)
+
+	local draw_fit = gui.get_position(self.Fr) + self.lb_adjustment
+	local XX, draw_adj = get_linebreak_adjustment(self.FSTotal, self.font.name)
+
+	self.draw_lines = {
+		{from = vmath.vector3(draw_fit.x,draw_fit.y + draw_adj,draw_fit.z), to = vmath.vector3(self.lineWidth,draw_fit.y + draw_adj,draw_fit.z)},
+		{from = vmath.vector3(draw_fit.x,draw_fit.y - draw_adj,draw_fit.z), to = vmath.vector3(self.lineWidth,draw_fit.y - draw_adj,draw_fit.z)}
+	}
+
 	bumpChat(self,txt)
 
-	print("DEF_CHAT:CHAT_BUILDER:POSITION_LINEBREAK_ADJUSTION: " .. self.linebreakAdjust)
-	print("DEF_CHAT:CHAT_BUILDER:ADJUSTION_DIFFERENCE: " .. tostring(self.chatPos - self.linebreakAdjust) .. "\n")
-	
+	print("DEF_CHAT:CHAT_BUILDER:POSITION_LINEBREAK_ADJUSTION: " .. self.lb_adjustment)
+	print("DEF_CHAT:CHAT_BUILDER:ADJUSTION_DIFFERENCE: " .. tostring(self.chatPos - self.lb_adjustment) .. "\n")
+
 	self.chatNodes[self.messages] = gui.new_text_node(self.chatPos,"")
 	self.chatMsgs[self.messages] = self.FSTotal
 
-	
+
 	self.stamp_text.go = true; -- This turns on the stamping function.
 
-	
+
 	msgStrings[self.messages] = self.FSTotal
 	defChat(self,self.chatNodes[self.messages])
 	txt = ""
 	self.chatProperties = get_length(self, txt)
+end
+
+function get_linebreak_adjustment(text, font)
+	local linebreaks = 0
+	local lines = 1
+
+	local height = gui.get_text_metrics(font, "A")
+	height = height.height / 1.5
+
+	for lb in string.gmatch(text, "\n") do
+		linebreaks = linebreaks + 1
+		lines = lines + 1
+	end
+
+	local lb_adjustment = 0
+
+	if linebreaks ~= 0 then
+		lb_adjustment = height * (linebreaks + (lines/1.5))
+	else
+		lb_adjustment = 0
+	end
+
+	local height = height * (linebreaks + lines)
+	return lb_adjustment, height
 end
 
 local let = 0
@@ -316,7 +443,7 @@ function stamp(self,immediate)
 		local letter = string.sub(msgStrings[self.stamped + 1],let,let)
 		total = total .. letter
 		gui.set_text(self.chatNodes[self.stamped + 1],total)
-		
+
 		if let >= maxLet then
 			print("DEF_CHAT:STAMPED:\n" .. total .. "\n")
 			total = ""
@@ -330,12 +457,12 @@ function stamp(self,immediate)
 		self.stamp_text.go = true
 	end
 end
-	
+
 function defChat(self,node)
 	gui.set_size_mode(node,gui.SIZE_MODE_MANUAL)
 	gui.set_size(node,vmath.vector3(self.lineWidth,self.chatProperties.height,0))
 	gui.set_parent(node,gui.get_node("Chatbox"))
-	gui.set_position(node,self.linebreakAdjust)
+	gui.set_position(node,self.lb_adjustment)
 	gui.set_font(node,self.font.name)
 	gui.set_pivot(node,gui.PIVOT_W)
 	gui.set_color(node,self.chatColor)
@@ -381,9 +508,9 @@ function get_command(self,string)
 	local found = false
 	local args = {}
 	local cutout = 0
-	
+
 	self.command = ""
-	
+
 	if string.sub(string, 1,1) == ">" then
 		local read = string.sub(string, 2,-1)
 		self.command = string.match(read,"%a+") --"(%w+)(.+)")
@@ -391,7 +518,7 @@ function get_command(self,string)
 
 		cutout = string.len(self.command)
 	end
-	
+
 	for i=1,get_table_length(self.chatCommands),1 do
 		if self.chatCommands[i].command == self.command then
 
@@ -408,7 +535,7 @@ function get_command(self,string)
 					end
 
 					cutout = cutout + string.len(arg)
-					
+
 					args[a] = arg
 				end
 			end
@@ -419,7 +546,7 @@ function get_command(self,string)
 	end
 	return found
 end
-	
+
 local it = ""
 
 function get_length(self,it)
