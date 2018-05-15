@@ -28,22 +28,22 @@ Then go to the toolbar at the top of your editor, select "Project" and click "Fe
 
 I set aside a properties module for DefChat to hook to that will not be overwritten every update. This allows you to make modifications, and not have those set back to the default for every update. Current properties:
 
-_ = {
+placeholder = {
 
-Properties = {
+	Properties = {
 
-	fonts = {
-		default = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
-		Second_Example = {name = hash("Second_Example")}
-	},
+		fonts = {
+			default = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
+			Second_Example = {name = hash("Second_Example")}
+		},
 
-	commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
+		commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
 
-	{
-		command = "clear",
-		func = "clear_chat",
-		args = {"amount"}
-	}
+		{
+			command = "clear",
+			func = "clear_chat",
+			args = {"amount"}
+		}
 
 },
 
