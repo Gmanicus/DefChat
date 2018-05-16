@@ -16,9 +16,11 @@ From Character-Precise linebreaking to the ability to stamp messages overtime, i
 
 # Installation Guide
 
-To install DefChat, you need to add it as a library dependency. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list.
+To install DefChat, you need to add it as a library dependency. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list. Go to the toolbar at the top of your editor, select "Project" and click "Fetch Libraries". You should see the "DefChat" folder appear in a few seconds.
 
-Then go to the toolbar at the top of your editor, select "Project" and click "Fetch Libraries". You should see the "DefChat" folder appear in a few seconds.
+Once that's all fine and dandy, make sure to download the DefChat_Properties file. It is required, but is not included in installation so that it is not overwritten every update.
+
+Once you've copied the properties file, you need a font. With your font in hand, you need to attach it to the properties file and the DefChat.gui file. **Make sure that _"All Chars"_ is selected on the font!** With that done, you're all set!
 
 ------
 
