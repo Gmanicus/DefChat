@@ -1,7 +1,7 @@
 script: "/DefChat/DefChat.gui_script"
 fonts {
   name: "Example"
-  font: "/builtins/fonts/system_font.font"
+  font: "/DefChat/Example.font"
 }
 background_color {
   x: 0.0
@@ -11,7 +11,7 @@ background_color {
 }
 nodes {
   position {
-    x: 200.0
+    x: 0.0
     y: 12.5
     z: 0.0
     w: 1.0
@@ -35,9 +35,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.4
-    z: 0.4
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   type: TYPE_BOX
@@ -46,7 +46,7 @@ nodes {
   id: "CommandLine"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_BOTTOM
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
   inherit_alpha: true
@@ -65,7 +65,7 @@ nodes {
 }
 nodes {
   position {
-    x: -185.0
+    x: 10.0
     y: 0.0
     z: 1.0
     w: 1.0
@@ -89,9 +89,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.6
-    z: 0.4
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   type: TYPE_TEXT
@@ -128,7 +128,7 @@ nodes {
 }
 nodes {
   position {
-    x: -190.0
+    x: 5.0
     y: 0.0
     z: 1.0
     w: 1.0
@@ -152,9 +152,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.6
-    z: 0.4
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   type: TYPE_TEXT
@@ -191,7 +191,7 @@ nodes {
 }
 nodes {
   position {
-    x: 200.0
+    x: 0.0
     y: 87.5
     z: 0.0
     w: 1.0
@@ -224,9 +224,9 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
   id: "Frame"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
   inherit_alpha: false
@@ -280,7 +280,7 @@ nodes {
   id: "Chatbox"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_TOP
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   parent: "Frame"
   layer: ""
@@ -300,7 +300,7 @@ nodes {
 }
 nodes {
   position {
-    x: -185.0
+    x: 10.0
     y: -42.5
     z: 1.0
     w: 1.0
@@ -324,9 +324,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.6
-    z: 0.4
+    x: 1.0
+    y: 1.0
+    z: 1.0
     w: 1.0
   }
   type: TYPE_TEXT
