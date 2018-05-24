@@ -16,11 +16,9 @@ From Character-Precise linebreaking to the ability to stamp messages overtime, i
 
 # Installation Guide
 
-To install DefChat, you need to add it as a library dependency. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list. Go to the toolbar at the top of your editor, select "Project" and click "Fetch Libraries". You should see the "DefChat" folder appear in a few seconds.
+To install DefChat, you need to add it as a library dependency. Click the "Copy Library URL" button above, open your game.project file, and paste the url into the "Dependencies" list.
 
-Once that's all fine and dandy, make sure to download the DefChat_Properties file. It is required, but is not included in installation so that it is not overwritten every update.
-
-Once you've copied the properties file, you need a font. With your font in hand, you need to attach it to the properties file and the DefChat.gui file. **Make sure that _"All Chars"_ is selected on the font!** With that done, you're all set!
+Then go to the toolbar at the top of your editor, select "Project" and click "Fetch Libraries". You should see the "DefChat" folder appear in a few seconds.
 
 ------
 
@@ -32,33 +30,48 @@ I set aside a properties module for DefChat to hook to that will not be overwrit
 
 placeholder = {
 
-	Properties = {
+		Properties = {
 
-		fonts = {
-			default = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
-			Second_Example = {name = hash("Second_Example")}
-		},
+			fonts = {
+				default = {name = hash("Example")},							-- Set fonts for DEF_CHAT to use
+				Second_Example = {name = hash("Second_Example")}
+			},
 
-		commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
+			stamp_text_instant = true,										-- Set stamp property. (True) instant messasge. (False) stamped message.
 
-			{
-				command = "clear",
-				func = "clear_chat",
-				args = {"amount"}
+			caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
+			stamp_speed = 0.001,
+
+			size = {
+
+				frame = vmath.vector3(400, 125, 0),
+				commandline = vmath.vector3(400, 25, 0)
+
+			},
+
+			frame_color = vmath.vector4(0,0,0,0.5),
+
+			commandline_color = {
+				active = vmath.vector4(.8,.8,.8,0.9),					-- Set command line color.
+				idle = vmath.vector4(.2,.2,.2,0.5)
+			},
+
+			font_color = {
+				in_frame = vmath.vector4(1,1,1,1),
+				in_commandline = vmath.vector4(0,0,0,1)
+			},
+
+			commands = {													-- Commands to be executed after '>' key. Runs function named under 'func'.
+
+				{
+					command = "clear",
+					func = "clear_chat",
+					args = {"amount"}
+				}
+
 			}
-
-		},
-
-		stamp_text_instant = true,										-- Set stamp property. (True)  instant messasge. (False) stamped message.
-
-		caret_speed = 0.48,												-- Set timing properties. Floor value is monitor refresh rate.
-		stamp_speed = 0.001,
-
-		commandline_color = {
-			active = vmath.vector4(.8,.8,.8,0.9),					-- Set command line color.
-			idle = vmath.vector4(.2,.2,.2,0.5)
+			
 		}
-	}
 
 ------
 
@@ -106,3 +119,15 @@ CHANGED: Organization to make things easier to understand/follow along.
 
 ADDED: Use of special characters. You can now use special characters in the chat, as long as your font supports them.
 ADDED: Alt-Sequence functionality. Hold Alt and enter a sequence to print special characters.
+
+-----
+
+# Version 0.670 - May 24th, 2018
+
+FIXED: Special characters and related bugs.  
+
+ADDED: Default font to bundle.  
+ADDED: Messages (change_font) (change_font_color), which allow you to modify the font while the asset is live. These do not effect previous messages.  
+ADDED: More customization values to DefChat Properties.
+
+CHANGED: Linebreaking adjustments. Lines are now slightly more spaced out for special characters.
