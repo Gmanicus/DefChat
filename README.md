@@ -128,6 +128,7 @@ FIXED: Special characters and related bugs.
 
 ADDED: Default font to bundle.  
 ADDED: Messages (change_font) (change_font_color), which allow you to modify the font while the asset is live. These do not effect previous messages.  
+
 ADDED: More customization values to DefChat Properties.
 
 CHANGED: Linebreaking adjustments. Lines are now slightly more spaced out for special characters.
