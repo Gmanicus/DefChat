@@ -270,7 +270,7 @@ function on_input(self, action_id, action)
 				self.cut_character = string.sub(self.chat, string.len(self.chat), string.len(self.chat))
 				self.chat = string.sub(self.chat, 1, -2)
 
-				if string.byte(self.cut_character) > 96 then
+				if string.byte(self.cut_character) > string.byte("~") then
 					self.chat = string.sub(self.chat, 1, -2)
 				end
 				
