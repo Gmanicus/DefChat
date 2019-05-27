@@ -1,7 +1,3 @@
-# DEPRECATED
--- Old code that verifiably does not work with the Defold Engine anymore. Feel free to do as you wish with this repo --
-
-
 # DefChat
 Chat asset for the Defold engine
 
