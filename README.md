@@ -1,3 +1,8 @@
+# DEPRECATION NOTICE:
+This asset is severely out of date, as I haven't used it nor the engine it was built for in years. This asset does not conform to my current code standards. It is merely a nice prop for my code museum :)
+
+
+
 # DefChat
 Chat asset for the Defold engine
 
